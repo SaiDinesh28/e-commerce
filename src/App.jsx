@@ -2,13 +2,18 @@ import Header from "./components/Header/Header";
 import products from "./data/products.json";
 import Products from "./components/Products/Products";
 import Cart from "./components/Cart/Cart";
+import AddProduct from "./components/AddProduct/AddProduct";
 import { useEffect,useCallback, useState } from "react";
 
 function App() {
   const [cartItemList,setCartItemList] = useState([]);
+  const [productsList,setProductsList]=useState(products);
   const [showCart,setShowCart] = useState(false);
+  const [showAddProduct,setShowAddProduct]= useState(false);
   const openCart = ()=>setShowCart(true);
   const closeCart = ()=>setShowCart(false);
+  const openAddProduct = ()=>setShowAddProduct(true);
+  const closeAddProduct = ()=>setShowAddProduct(false);
   const increaseQuantity = (item) => {
     setCartItemList((prevList)=>
     prevList.map((currItem) => currItem.id===item.id?{...currItem,quantity:currItem.quantity+1}:currItem
@@ -39,15 +44,19 @@ function App() {
   });
      
 },[]);
+const addToProductList = useCallback((newItemName) =>{
+  setProductsList((oldList)=>[...oldList,{id:oldList.length+1,name:newItemName,image:"default_product.png"}]);
+},[]);
 useEffect(() => {
     console.log("Cart has updated:", cartItemList);
   }, [cartItemList]);
   return <div>
     <Header 
     openCart={openCart}
+    openAddProduct={openAddProduct}
     />
     <Products
-    current_products={products}
+    current_products={productsList}
     addToCart={addToCart}
     />
     <Cart
@@ -56,6 +65,11 @@ useEffect(() => {
     closeCart={closeCart}
     increaseQuantity={increaseQuantity}
     decreaseQuantity={decreaseQuantity}
+    />
+    <AddProduct
+    showAddProduct={showAddProduct}
+    closeAddProduct={closeAddProduct}
+    addToProductList={addToProductList}
     />
   </div>
 }
