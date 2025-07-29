@@ -9,6 +9,22 @@ function App() {
   const [showCart,setShowCart] = useState(false);
   const openCart = ()=>setShowCart(true);
   const closeCart = ()=>setShowCart(false);
+  const increaseQuantity = (item) => {
+    setCartItemList((prevList)=>
+    prevList.map((currItem) => currItem.id===item.id?{...currItem,quantity:currItem.quantity+1}:currItem
+    )
+    )
+  }
+    const decreaseQuantity = (item) => {
+    setCartItemList((prevList)=>
+    prevList.map((currItem) => currItem.id===item.id?{...currItem,quantity:currItem.quantity-1}:currItem
+    )
+    )
+    setCartItemList((prevList)=>
+    prevList.filter((item)=>item.quantity>0)
+    )
+  }
+  
   const addToCart= useCallback((currItem)=>{
     setCartItemList((cartItemList)=>
   { 
@@ -38,6 +54,8 @@ useEffect(() => {
     cartItemList={cartItemList}
     showCart={showCart}
     closeCart={closeCart}
+    increaseQuantity={increaseQuantity}
+    decreaseQuantity={decreaseQuantity}
     />
   </div>
 }

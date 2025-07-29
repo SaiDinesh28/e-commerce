@@ -1,8 +1,7 @@
 import Modal from "../Modal/Modal";
 import "./Cart.css";
-function Cart({cartItemList,showCart,closeCart}){
+function Cart({cartItemList,showCart,closeCart,increaseQuantity,decreaseQuantity}){
     console.log("cart is rendered");
-    // cartItemList = ["Dinesh"]
     return (
         <Modal showModal={showCart} closeModal={closeCart}>
         <div className="cart-container">
@@ -19,8 +18,8 @@ function Cart({cartItemList,showCart,closeCart}){
                         </div>
                         <div className="cart-item-controls">
                             <p>qty:{`${item.quantity}`}</p>
-                            <button className="quantity-btn">+</button>
-                            <button className="quantity-btn">-</button>
+                            <button className="quantity-btn" onClick={()=>increaseQuantity(item)}>+</button>
+                            <button className="quantity-btn" onClick={()=>decreaseQuantity(item)}>-</button>
                         </div>
                     </div>
                 ))}
