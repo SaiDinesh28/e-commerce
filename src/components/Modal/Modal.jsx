@@ -1,9 +1,12 @@
 import "./Modal.css"
-function Modal({showModal,children}){
+function handleClick(event){
+    event.stopPropagation();
+}
+function Modal({showModal,closeModal,children}){
     if(!showModal) return null; 
     return (
-    <div class="modal-backdrop" id="myModal">
-    <div class="modal-content">
+    <div className="modal-backdrop" id="myModal" onClick={closeModal}>
+    <div className="modal-content" onClick={handleClick}>
         {children}
     </div>
     </div>);
